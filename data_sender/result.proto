@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+message EVM {
+    string field = 1;
+    float evm_rms = 2;
+    float evm_max = 3;
+    float evm_min = 4;
+}
+
+message constellation {
+    string field = 1;
+    repeated float real = 2;
+    repeated float imag = 3;
+    repeated float ref_real = 4;
+    repeated float ref_imag = 5;
+}
+
+message result {
+    repeated float spectrum = 1;
+    repeated EVM evm_res = 2;
+    repeated float evm_vs_symbol = 3;
+    repeated float evm_vs_rb = 4;
+    repeated constellation constellation_data = 5;
+}

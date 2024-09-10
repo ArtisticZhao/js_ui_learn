@@ -10,7 +10,7 @@
 
     onMount(() => {
         // WebSocket 连接
-        const ws = new WebSocket('ws://localhost:9000');
+        const ws = new WebSocket('ws://localhost:9000/frontend');
 
         // 初始化线图 (line chart)
         const lineCtx = document.getElementById('lineChart').getContext('2d');
