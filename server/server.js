@@ -36,8 +36,9 @@ protobuf.load("../data_sender/result.proto", (err, root) => {
                 try {
                     // 假设消息是二进制的 Protobuf 数据
                     const decodedMessage = ResultMessage.decode(message);
+                    console.log("recv length: " + message.length)
                     // 打印反序列化后的对象
-                    console.log("Received Protobuf message:", JSON.stringify(decodedMessage, null, 2));
+                    // console.log("Received Protobuf message:", JSON.stringify(decodedMessage, null, 2));
 
                     // 将反序列化后的 Protobuf 数据作为 JSON 发送给所有前端连接的客户端
                     const jsonMessage = JSON.stringify(decodedMessage);

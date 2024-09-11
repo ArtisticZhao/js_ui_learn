@@ -17,7 +17,6 @@
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-
       // 更新频谱数据
       if (data.spectrum) {
         spectrumData = data.spectrum;
@@ -25,26 +24,25 @@
       }
 
       // 更新 EVM vs Symbol 数据
-      if (data.evm_vs_symbol) {
-        evmVsSymbolData = data.evm_vs_symbol;
+      if (data.evmVsSymbol) {
+        evmVsSymbolData = data.evmVsSymbol;
         updateEvmVsSymbolChart(evmVsSymbolData);
       }
-
       // 更新 EVM vs RB 数据
-      if (data.evm_vs_rb) {
-        evmVsRbData = data.evm_vs_rb;
+      if (data.evmVsRb) {
+        evmVsRbData = data.evmVsRb;
         updateEvmVsRbChart(evmVsRbData);
       }
 
       // 更新星座图
-      if (data.constellation_data) {
-        constellations = data.constellation_data;
+      if (data.constellationData) {
+        constellations = data.constellationData;
         updateConstellationChart(constellations);
       }
 
       // 更新 EVM 表格
-      if (data.evm_res) {
-        evmTable = data.evm_res;
+      if (data.evmRes) {
+        evmTable = data.evmRes;
       }
     };
   });
@@ -173,37 +171,79 @@
     }
   }
 </script>
+<!-- 布局容器 -->
+<div class="grid-container">
+    <!-- 频谱图 -->
+    <canvas id="spectrum-chart"></canvas>
 
-<!-- 频谱图 -->
-<canvas id="spectrum-chart"></canvas>
+    <!-- EVM vs Symbol 图 -->
+    <canvas id="evm-vs-symbol-chart"></canvas>
 
-<!-- EVM vs Symbol 图 -->
-<canvas id="evm-vs-symbol-chart"></canvas>
+    <!-- EVM vs RB 图 -->
+    <canvas id="evm-vs-rb-chart"></canvas>
 
-<!-- EVM vs RB 图 -->
-<canvas id="evm-vs-rb-chart"></canvas>
+    <!-- 星座图 -->
+    <canvas id="constellation-chart"></canvas>
 
-<!-- 星座图 -->
-<canvas id="constellation-chart"></canvas>
+    <!-- EVM 表格 -->
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>EVM RMS</th>
+          <th>EVM Max</th>
+          <th>EVM Min</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each evmTable as evm}
+        <tr>
+          <td>{evm.field}</td>
+          <td>{evm.evmRms}</td>
+          <td>{evm.evmMax}</td>
+          <td>{evm.evmMin}</td>
+        </tr>
+        {/each}
+      </tbody>
+    </table>
+</div>
 
-<!-- EVM 表格 -->
-<table>
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>EVM RMS</th>
-      <th>EVM Max</th>
-      <th>EVM Min</th>
-    </tr>
-  </thead>
-  <tbody>
-    {#each evmTable as evm}
-    <tr>
-      <td>{evm.field}</td>
-      <td>{evm.evm_rms}</td>
-      <td>{evm.evm_max}</td>
-      <td>{evm.evm_min}</td>
-    </tr>
-    {/each}
-  </tbody>
-</table>
+<!-- CSS 部分 -->
+<style>
+  /* 设置网格布局 */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 两列 */
+    grid-template-rows: repeat(2, auto);    /* 两行 */
+    gap: 20px;                              /* 图表之间的间距 */
+    margin: 20px;
+  }
+
+  /* 图表根据页面大小自动调整 */
+  canvas {
+    width: 100%;        /* 宽度自适应 */
+    height: 100%;       /* 高度自适应 */
+    max-width: 600px;   /* 设置图表的最大宽度 */
+    max-height: 400px;  /* 设置图表的最大高度 */
+    border: 1px solid #ccc; /* 添加边框 */
+  }
+
+  /* 表格占满全宽，放置在最下方 */
+  .evm-table {
+    grid-column: 1 / span 2; /* 表格跨两列 */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  /* 表格样式 */
+  .evm-table th, .evm-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .evm-table th {
+    background-color: #f2f2f2;
+  }
+</style>
