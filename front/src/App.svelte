@@ -64,6 +64,7 @@
         },
         options: {
           responsive: true,
+          animation: false,  // 关闭所有动画
           scales: {
             x: { display: true },
             y: { display: true }
@@ -93,6 +94,7 @@
         },
         options: {
           responsive: true,
+          animation: false,  // 关闭所有动画
           scales: {
             x: { display: true },
             y: { display: true }
@@ -114,18 +116,32 @@
         data: {
           labels: evmVsRbData.map((_, index) => index),
           datasets: [{
-            label: 'EVM vs RB',
-            data: evmVsRbData,
-            borderColor: 'rgba(54, 162, 235, 1)',
-            fill: false
+                    label: 'Stem Plot',
+                    data: evmVsRbData,
+                    borderColor: 'blue', // 线的颜色
+                    showLine: true,      // 显示线
+                    pointRadius: 5,      // 点的大小
+                    pointBackgroundColor: 'red', // 点的颜色
+                    borderWidth: 1,      // 线的宽度
+                    fill: false,         // 不填充
           }]
         },
         options: {
-          responsive: true,
-          scales: {
-            x: { display: true },
-            y: { display: true }
-          }
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom'
+                },
+                y: {
+                    beginAtZero: true  // y 轴从 0 开始
+                }
+            },
+            elements: {
+                line: {
+                    tension: 0 // 线段不平滑
+                }
+            },
+            animation: false // 关闭动画加速更新
         }
       });
     } else {
@@ -158,6 +174,14 @@
         },
         options: {
           responsive: true,
+          animation: false,  // 关闭所有动画
+          plugins: {
+            decimation: {
+                enabled: true,
+                algorithm: 'min-max',  // 使用 min-max 抽样
+                samples: 1000          // 渲染时限制为1000个数据点
+            }
+          },
           scales: {
             x: { display: true },
             y: { display: true }

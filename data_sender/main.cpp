@@ -70,7 +70,7 @@ int main (int argc, char *argv[]) {
         const_entry->set_field("Constellation Field 1");
 
         // 设置 constellation 的 real, imag, ref_real, ref_imag 列表
-        size_t c_size = 500;
+        size_t c_size = 273*12*500;
         std_fvec sign = gen_random(c_size, -1, +1);
         std_fvec signQ = gen_random(c_size, -1, +1);
         std_fvec noise = gen_random(c_size, -0.003, +0.003);
